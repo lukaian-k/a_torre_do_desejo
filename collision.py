@@ -54,8 +54,9 @@ def collision_map1(objeto):
 
     #Colisao das caixas no mapa
     #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
-    coordenadas_caixas = [[-823, -97, 30, 30, 30, 30], [-435, -32, 30, 30, 30, 30], [-375, 287, 30, 30, 30, 30], [-180, 33, 30, 30, 30, 30], [-52, 289, 30, 30, 30, 30], [75, -295, 30, 30, 30, 30], [397, -103, 30, 30, 30, 30], [779, -168, 30, 30, 30, 30], [743, 92, 30, 30, 30, 30], [616, 289, 30, 30, 30, 30], [745, 288, 30, 30, 30, 30]]
-    for i in range(len(coordenadas_caixas)):
-        if (collision_square(objeto, coordenadas_caixas[i][0], coordenadas_caixas[i][2], coordenadas_caixas[i][3], coordenadas_caixas[i][1], coordenadas_caixas[i][4], coordenadas_caixas[i][5]) == True):
-            return True
+    if (objeto.voador == False):
+        coordenadas_caixas = [[-823, -97, 20, 30, 10, 50], [-435, -32, 30, 30, 10, 50], [-375, 287, 30, 30, 10, 60], [-180, 30, 30, 30, 10, 50], [-52, 289, 30, 30, 10, 60], [75, -295, 30, 30, 10, 60], [397, -103, 30, 30, 9, 60], [779, -168, 30, 30, 10, 60], [743, 92, 30, 25, 10, 60], [616, 289, 30, 30, 10, 50], [745, 288, 30, 30, 10, 60]]
+        for i in range(len(coordenadas_caixas)):
+            if (collision_square(objeto, coordenadas_caixas[i][0], coordenadas_caixas[i][2], coordenadas_caixas[i][3], coordenadas_caixas[i][1], coordenadas_caixas[i][4], coordenadas_caixas[i][5]) == True):
+                return True
     return False

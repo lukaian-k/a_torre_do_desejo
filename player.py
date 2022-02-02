@@ -26,7 +26,7 @@ def reset_frame_walk(frame_up, frame_down, frame_right, frame_left):
 
 #Tiro do arco - faz com que a flecha mude de sprite e direcao, cria a movimentacao do tiro e checa se colidio com alguma coisa
 def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot):
-    #print(x, y)
+    print(x, y)
     if (lista_objetos['flecha'].ataque == True):
         eventos_off('wsda', screen)
         lista_objetos['flecha'].setpos(lista_objetos['player'].pos())
