@@ -1,11 +1,14 @@
-#Imports
-import turtle; from collision import *
+#Imports de libs
+from time import sleep
+import turtle
+#Imports de arquivos da propria pasta
+from collision import *
 
 
 #Funções
 
 #Movimentação do player - funcao principal do movimento do player, muda a direcao e sprite de acordo com a direcao que foi aperta
-def walk_main(screen, lista_objetos, direcao, distancia, frame, all_frames, diretorio, eventos_on, eventos_off):
+def walk_main(screen, lista_objetos, direcao, distancia, frame, all_frames, diretorio, eventos_on, eventos_off, mapas):
     screen.update(); eventos_off('wsda', screen)
     posicao = lista_objetos['player'].pos()
     lista_objetos['player'].setheading(direcao); lista_objetos['player'].forward(distancia)
@@ -16,8 +19,12 @@ def walk_main(screen, lista_objetos, direcao, distancia, frame, all_frames, dire
     else:
         frame = 1
 
-    if (collision_map1(lista_objetos['player']) == True):
+    if (collision_mapa(lista_objetos['player'], mapas) == True):
         lista_objetos['player'].setpos(posicao)
+
+    if (lista_objetos['chave'].pegou == 1):
+        mapas.key()
+    screen.update()
     eventos_on(screen)
     return frame
 #Reseta os frames da animacao da direcao do player - é uma dependencia da funcao da funcao da movimentacao. ela armazena qual tecla foi apertada por ultimo para que continue a animacao em sequencia na ordem certa de cada direcao
@@ -25,9 +32,9 @@ def reset_frame_walk(frame_up, frame_down, frame_right, frame_left):
     return [frame_up, frame_down, frame_right, frame_left]
 
 #Tiro do arco - faz com que a flecha mude de sprite e direcao, cria a movimentacao do tiro e checa se colidio com alguma coisa
-def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot):
+def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas):
     print(x, y)
-    if (lista_objetos['flecha'].ataque == True):
+    if (lista_objetos['flecha'].ataque == True and mapas.monstros_fase > 0):
         eventos_off('wsda', screen)
         lista_objetos['flecha'].setpos(lista_objetos['player'].pos())
         angulo_arrow = lista_objetos['flecha'].towards(x, y)
@@ -50,24 +57,48 @@ def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_o
             lista_objetos['flecha'].shape('./projectiles/arrow/arrow4.gif')
         elif (300 <= angulo_arrow <= 329): #Vertical - inferior direito
             lista_objetos['flecha'].shape('./projectiles/arrow/arrow7.gif')
-
+        
         lista_objetos['flecha'].showturtle()
-        for i in range(33):
+        tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas)
+
+def tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas):
+    ocorreu_colisao = False
+    screen.update()
+    lista_objetos['flecha'].forward(10); screen.update()
+    if (collision_mapa(lista_objetos['flecha'], mapas) == True):
+        ocorreu_colisao = True
+    inimigo_colisao = collision_enemy(lista_inimigos, lista_objetos['flecha'])
+    if (inimigo_colisao != None):
+        if (inimigo_colisao[1] == 'estatua' and mapas.monstros_fase > 1):
+            pass
+        else:
+            inimigo_colisao[0].vida -= 1
+
+        if (inimigo_colisao[0].vida > 0):
+            if (inimigo_colisao[1] == 'slime_grande1' or inimigo_colisao[1] == 'slime_grande2'):
+                lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.3)
+            elif (inimigo_colisao[1] == 'estatua'):
+                lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.3)
+            else:
+                lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*2.5)
+            lista_objetos['player'].numeros_dano.showturtle()
+            lista_objetos['player'].numeros_dano.shape(f'./objects/numeros/numero{inimigo_colisao[0].vida}.gif')
             screen.update()
-            for z in range(10):
-                lista_objetos['flecha'].forward(1)
-                screen.update()
-            if (collision_map1(lista_objetos['flecha']) == True):
-                break
-            inimigo_colisao = collision_enemy(lista_inimigos, lista_objetos['flecha'])
-            if (inimigo_colisao != None):
-                inimigo_colisao.vida -= 1
-                if (inimigo_colisao.vida > 0):
-                    break
-                else:
-                    inimigo_colisao.hideturtle()
-                    inimigo_colisao.setpos(-2000, -2000)
-                    inimigo_colisao.ontimer_continuar = False
-                    break
+            sleep(0.2)
+            lista_objetos['player'].numeros_dano.hideturtle()
+            ocorreu_colisao = True
+        else:
+            inimigo_colisao[0].shape('./enemy/sprite_transparente/sprite1.gif')
+            inimigo_colisao[0].ontimer_continuar = False
+            mapas.monstros_fase -= 1
+            if (mapas.monstros_fase <= 0):
+                lista_objetos['player'].chave.showturtle()
+            ocorreu_colisao = True
+    if (ocorreu_colisao == True or lista_objetos['flecha'].distancia >= 33):
         lista_objetos['flecha'].hideturtle(); screen.update(); eventos_on(screen)
-        lista_objetos['flecha'].ataque = False; screen.ontimer(time_shot, 700)
+        lista_objetos['flecha'].ataque = False; screen.ontimer(time_shot, 1000)
+        lista_objetos['flecha'].distancia = 0
+    else:
+        lista_objetos['flecha'].distancia += 1
+        screen.update()
+        tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas)
