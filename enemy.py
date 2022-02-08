@@ -81,7 +81,7 @@ def boss_final_acao(screen, pos_player, enemy, all_frames):
         enemy.shape(f'./enemy/boss_final/boss_final_left{enemy.frame}.gif')
         enemy.frame += 1
     else:
-        enemy.forward(5)
+        enemy.forward(10)
         enemy.tempo_animacao += 1
     
     screen.update()

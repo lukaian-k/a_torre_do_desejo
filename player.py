@@ -21,7 +21,8 @@ def walk_main(screen, lista_objetos, lista_inimigos, direcao, distancia, frame, 
 
     if (collision_mapa(lista_objetos['player'], mapas) == True):
         lista_objetos['player'].setpos(posicao)
-    if (collision_mapa(lista_objetos['player'], mapas) == 'kill'):
+        
+    if (mapas.mapa_atual == 3 and collision_mapa(lista_objetos['player'], mapas) == 'kill'):
         game_over(screen, lista_objetos['player'], lista_inimigos, enemy_name, eventos_off, mapas)
 
     if (lista_objetos['chave'].pegou == 1):

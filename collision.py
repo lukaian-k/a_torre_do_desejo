@@ -91,7 +91,7 @@ def collision_mapa(objeto, mapas):
                 return True
 
         #Colisao com a estatua
-        if (collision_square(objeto, 11, 143, 143, 66, 103, 0) == True):
+        if (collision_square(objeto, 11, 143, 143, 66, 103, 0) == True and mapas.monstros_fase > 0):
             return True
 
         #Colisao com o portal
@@ -108,7 +108,7 @@ def collision_mapa(objeto, mapas):
                 return True
 
         #Colisao com as estatuas do mapa
-        coordenadas_estatuas = [[-823, -97, 20, 30, 10, 50], [-435, -32, 30, 30, 10, 50], [-375, 287, 30, 30, 10, 60], [-180, 30, 30, 30, 10, 50]]
+        coordenadas_estatuas = [[-821, -333, 50, 50, 50, 50], [-817, 222, 50, 50, 50, 50], [821, 221, 50, 50, 50, 50], [823, -329, 50, 50, 50, 50]]
         for i in range(len(coordenadas_estatuas)):
             if (collision_square(objeto, coordenadas_estatuas[i][0], coordenadas_estatuas[i][2], coordenadas_estatuas[i][3], coordenadas_estatuas[i][1], coordenadas_estatuas[i][4], coordenadas_estatuas[i][5]) == True):
                 return True
@@ -129,9 +129,9 @@ def collision_mapa(objeto, mapas):
                 return True
 
         #Colisao com as escolhas do mapa
-        coordenadas_estatuas = [[-10, 275, 50, 50, 50, 50], [553, -287, 50, 50, 50, 50], [-549, -290, 50, 50, 50, 50]]
-        for i in range(len(coordenadas_estatuas)):
-            if (collision_square(objeto, coordenadas_estatuas[i][0], coordenadas_estatuas[i][2], coordenadas_estatuas[i][3], coordenadas_estatuas[i][1], coordenadas_estatuas[i][4], coordenadas_estatuas[i][5]) == True):
+        coordenadas_escolhas = [[-10, 275, 50, 50, 50, 50], [553, -287, 50, 50, 50, 50], [-549, -290, 50, 50, 50, 50]]
+        for i in range(len(coordenadas_escolhas)):
+            if (collision_square(objeto, coordenadas_escolhas[i][0], coordenadas_escolhas[i][2], coordenadas_escolhas[i][3], coordenadas_escolhas[i][1], coordenadas_escolhas[i][4], coordenadas_escolhas[i][5]) == True):
                 if (i == 0):
                     mapas.liberdade()
                 elif (i == 1):

@@ -6,11 +6,16 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
     global play
     play = False
 
+    #Reseta todos os elementos para recomecar o jogo apartir do mapa um
     if (mapas.mapa1_reiniciado == False):
         for i in range(70):
             screen.bgpic(f'./screen/equipe/dev{i+1}.gif')
             screen.update()
             sleep(0.01)
+        for i in range(3):
+            screen.bgpic(f'./history/inicio/frame{i+1}.gif')
+            screen.update()
+            sleep(6)
         screen.onkey(iniciar_gamer, 'Return')
 
         while True:
@@ -24,11 +29,12 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
                 screen.update()
     else:
         if (mapas.final == True):
-            mapas.ontimer_continuar = False
+            mapas.final = False
             for i in range(70):
                 screen.bgpic(f'./screen/equipe/dev{i+1}.gif')
                 screen.update()
                 sleep(0.01)
+
         screen.onkey(iniciar_gamer, 'Return')
 
         while True:
@@ -36,17 +42,10 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
                 if (play == True):
                     play = False
                     screen.onkey(None, 'Return')
-                    
-                    mapas.mapa1_reiniciado = True
-                    if (mapas.mapa_atual >= 2):
-                        mapas.mapa2_reiniciado = True
-                    if (mapas.mapa_atual >= 3):
-                        mapas.mapa3_reiniciado = True
 
                     mapas.monstros_fase = 6
                     mapas.mapa_atual = 1
                     mapas.ontimer_continuar = True
-                    mapas.final = False
                     player.showturtle()
                     player.shape('./move/right/mapa1/right1.gif')
                     player.chave.pegou = 0
@@ -59,6 +58,7 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
                     lista_inimigos['estatua'].bola_de_fogo.setheading(0)
                     lista_inimigos['estatua'].bola_de_fogo.shape('./projectiles/bola_de_fogo/bola_de_fogo4.gif')
                     lista_inimigos['estatua'].tempo_animacao = 0
+                    lista_inimigos['boss_final'].shape('./enemy/boss_final/boss_final_left1.gif')
                     lista_inimigos['boss_final'].tempo_animacao = 0
 
                     mapas.mapa_um()

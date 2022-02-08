@@ -361,14 +361,13 @@ def chamando_boss_final():
 def animation_background():
     if (mapas.ontimer_continuar == True):
         if (mapas.final == True):
-            inicio(janela, nessa, lista_inimigos, enemy_name, mapas)
+            game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
         elif (mapas.animacao_fundo[0] < mapas.animacao_fundo[1]+1):
             janela.bgpic(f'{mapas.animacao_fundo[2]}{mapas.animacao_fundo[0]}.gif')
             mapas.animacao_fundo[0] += 1
         else:
             mapas.animacao_fundo[0] = 1
         janela.ontimer(animation_background, mapas.animacao_fundo[3])
-
 
 
 #Objetos
@@ -472,31 +471,25 @@ class mapas():
     #Escolhas
     def poder():
         nessa.hideturtle()
-        teclas_off('wsda', janela)
         janela.bgpic('./history/finais/ruim/ruim1.gif')
         janela.update()
 
-        mapas.mapa1_reiniciado = True
         mapas.final = True
         sleep(10)
 
     def riquezas():
         nessa.hideturtle()
-        teclas_off('wsda', janela)
         janela.bgpic('./history/finais/neutro/neutro1.gif')
         janela.update()
 
-        mapas.mapa1_reiniciado = True
         mapas.final = True
         sleep(10)
 
     def liberdade():
         nessa.hideturtle()
-        teclas_off('wsda', janela)
         janela.bgpic('./history/finais/bom/bom1.gif')
         janela.update()
 
-        mapas.mapa1_reiniciado = True
         mapas.final = True
         sleep(10)
 

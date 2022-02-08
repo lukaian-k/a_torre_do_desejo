@@ -19,11 +19,19 @@ def game_over(screen, player, lista_inimigos, enemy_name, teclas_off, mapas):
 
     screen.update()
     mapas.mapa_atual = 0
+
+    mapas.mapa1_reiniciado = True
+    if (mapas.mapa_atual >= 2):
+        mapas.mapa2_reiniciado = True
+    if (mapas.mapa_atual >= 3):
+        mapas.mapa3_reiniciado = True
+
     #Tela de game over
-    for i in range(15):
-        screen.bgpic(f'./screen/game_over/frame{i+1}.gif')
-        screen.update()
-        sleep(0.01)
-    sleep(3)
+    if (mapas.final == False):
+        for i in range(15):
+            screen.bgpic(f'./screen/game_over/frame{i+1}.gif')
+            screen.update()
+            sleep(0.01)
+        sleep(3)
 
     inicio(screen, player, lista_inimigos, enemy_name, mapas) #Chama a tela inicial do jogo para que o jogador posso iniciar novamente
