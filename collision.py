@@ -85,7 +85,7 @@ def collision_mapa(objeto, mapas):
     #Colisoes do mapa dois
     elif (mapas.mapa_atual == 2):
         #Colisao com as paredes no mapa
-        coordenadas_paredes = [[861, 393], [-862, -376]]
+        coordenadas_paredes = [[851, 383], [-852, -366]]
         for i in range(len(coordenadas_paredes)):
             if (collision_screen(objeto, coordenadas_paredes[i][0], coordenadas_paredes[i][1]) == True):
                 return True
@@ -101,5 +101,41 @@ def collision_mapa(objeto, mapas):
 
     #Colisoes do mapa tres
     elif (mapas.mapa_atual == 3):
-        pass
+        #Colisao com as paredes no mapa
+        coordenadas_paredes = [[861, 393], [-862, -376]]
+        for i in range(len(coordenadas_paredes)):
+            if (collision_screen(objeto, coordenadas_paredes[i][0], coordenadas_paredes[i][1]) == True):
+                return True
+
+        #Colisao com as estatuas do mapa
+        coordenadas_estatuas = [[-823, -97, 20, 30, 10, 50], [-435, -32, 30, 30, 10, 50], [-375, 287, 30, 30, 10, 60], [-180, 30, 30, 30, 10, 50]]
+        for i in range(len(coordenadas_estatuas)):
+            if (collision_square(objeto, coordenadas_estatuas[i][0], coordenadas_estatuas[i][2], coordenadas_estatuas[i][3], coordenadas_estatuas[i][1], coordenadas_estatuas[i][4], coordenadas_estatuas[i][5]) == True):
+                return True
+
+        #Colisao com os espinhos do mapa
+        if (objeto.player == True):
+            coordenadas_espinhos = [[-688, -309, 35, 35, 30, 30], [-480, -114, 35, 35, 30, 30], [-673, -7, 35, 35, 30, 30], [-480, 107, 35, 35, 30, 30], [-688, 316, 35, 35, 30, 30], [-80, -5, 35, 35, 30, 30], [288, 109, 35, 35, 30, 30], [288, -116, 35, 35, 30, 30], [687, 316, 35, 35, 30, 30], [670, 9, 35, 35, 30, 30], [688, -323, 35, 35, 30, 30]]
+            for i in range(len(coordenadas_espinhos)):
+                if (collision_square(objeto, coordenadas_espinhos[i][0], coordenadas_espinhos[i][2], coordenadas_espinhos[i][3], coordenadas_espinhos[i][1], coordenadas_espinhos[i][4], coordenadas_espinhos[i][5]) == True):
+                    return 'kill'
+        
+    #Colisoes do mapa fim
+    elif (mapas.mapa_atual == 4):
+        #Colisao com as paredes no mapa
+        coordenadas_paredes = [[861, 393], [-862, -376]]
+        for i in range(len(coordenadas_paredes)):
+            if (collision_screen(objeto, coordenadas_paredes[i][0], coordenadas_paredes[i][1]) == True):
+                return True
+
+        #Colisao com as escolhas do mapa
+        coordenadas_estatuas = [[-10, 275, 50, 50, 50, 50], [553, -287, 50, 50, 50, 50], [-549, -290, 50, 50, 50, 50]]
+        for i in range(len(coordenadas_estatuas)):
+            if (collision_square(objeto, coordenadas_estatuas[i][0], coordenadas_estatuas[i][2], coordenadas_estatuas[i][3], coordenadas_estatuas[i][1], coordenadas_estatuas[i][4], coordenadas_estatuas[i][5]) == True):
+                if (i == 0):
+                    mapas.liberdade()
+                elif (i == 1):
+                    mapas.poder()
+                elif (i == 2):
+                    mapas.riquezas()
     return False

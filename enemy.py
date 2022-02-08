@@ -9,7 +9,16 @@ enemy_list = {'slime1': {'diretorio': './enemy/slime/slime', 'frames': 5, 'vida'
 'demonio1': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
 'demonio2': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
 'demonio3': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
-'demonio4': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1}}
+'demonio4': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
+'esqueleto1': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'esqueleto2': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'esqueleto3': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'esqueleto4': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'esqueleto5': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'esqueleto6': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'esqueleto7': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'esqueleto8': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
+'boss_final': {'diretorio': './enemy/boss_final/boss_final', 'frames': 5, 'vida': 1}}
 
 #Lista inimigos - uma lista que contem apenas as chaves do dicionario enemy_list
 enemy_name = list(enemy_list.keys())
@@ -18,7 +27,7 @@ enemy_name = list(enemy_list.keys())
 #Funcoes
 
 #Acao de cada inimigo - o que cada inimigo ira fazer
-#Slime - Morcego - Slime grande
+#Slime - Morcego - Slime grande - Demonio - Esqueleto
 def enemy_persegue(screen, pos_player, name, enemy, all_frames, forward):
     if (enemy[name].frame < all_frames[name]['frames']+1):
         angulo = enemy[name].towards(pos_player); enemy[name].setheading(angulo); enemy[name].forward(forward)
@@ -30,15 +39,17 @@ def enemy_persegue(screen, pos_player, name, enemy, all_frames, forward):
     else:
         enemy[name].frame = 1
 
-def acao_estatua(screen, enemy, player, collision_enemy_projectiles):
-    if (enemy.frame == 5):
+def acao_estatua(screen, enemy, player, collision_enemy_projectiles, all_frames):
+    if (enemy.tempo_animacao == 0):
+        enemy.bola_de_fogo.setpos(12, -14)
+
+    if (enemy.frame == all_frames+1):
         enemy.frame = 1
 
     enemy.bola_de_fogo.showturtle()
     if (enemy.tempo_animacao >= 50):
         enemy.tempo_animacao = 0
         enemy.bola_de_fogo.hideturtle()
-        enemy.bola_de_fogo.setpos(12, -14)
         enemy.bola_de_fogo.shape(f'./projectiles/bola_de_fogo/bola_de_fogo{enemy.frame}.gif')
         enemy.bola_de_fogo.right(90)
         enemy.frame += 1
@@ -55,4 +66,22 @@ def acao_estatua(screen, enemy, player, collision_enemy_projectiles):
     if (collision_enemy_projectiles(enemy.bola_de_fogo, player) == True):
         enemy.bola_de_fogo.hideturtle()
         return True
+    screen.update()
+
+#Boss final - acao
+def boss_final_acao(screen, pos_player, enemy, all_frames):
+    if (enemy.tempo_animacao == 0):
+        enemy.setheading(enemy.towards(pos_player))
+
+    if (enemy.frame == all_frames+1):
+        enemy.frame = 1
+
+    if (enemy.tempo_animacao >= 50):
+        enemy.tempo_animacao = 0
+        enemy.shape(f'./enemy/boss_final/boss_final_left{enemy.frame}.gif')
+        enemy.frame += 1
+    else:
+        enemy.forward(5)
+        enemy.tempo_animacao += 1
+    
     screen.update()

@@ -13,7 +13,9 @@ def game_over(screen, player, lista_inimigos, enemy_name, teclas_off, mapas):
     for i in enemy_name:
         lista_inimigos[i].ontimer_continuar = False
         lista_inimigos[i].hideturtle()
-        lista_inimigos[i].setpos(-1000, -1000)
+        if (i == 'estatua'):
+            lista_inimigos[i].bola_de_fogo.hideturtle()
+        lista_inimigos[i].setpos(0, 1000)
 
     screen.update()
     mapas.mapa_atual = 0

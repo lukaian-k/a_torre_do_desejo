@@ -1,14 +1,14 @@
 #Imports de libs
-from time import sleep
 import turtle
+from time import sleep
 #Imports de arquivos da propria pasta
-from collision import *
+from collision import *; from game_over import game_over; from enemy import enemy_name
 
 
 #Funções
 
 #Movimentação do player - funcao principal do movimento do player, muda a direcao e sprite de acordo com a direcao que foi aperta
-def walk_main(screen, lista_objetos, direcao, distancia, frame, all_frames, diretorio, eventos_on, eventos_off, mapas):
+def walk_main(screen, lista_objetos, lista_inimigos, direcao, distancia, frame, all_frames, diretorio, eventos_on, eventos_off, mapas):
     screen.update(); eventos_off('wsda', screen)
     posicao = lista_objetos['player'].pos()
     lista_objetos['player'].setheading(direcao); lista_objetos['player'].forward(distancia)
@@ -21,6 +21,8 @@ def walk_main(screen, lista_objetos, direcao, distancia, frame, all_frames, dire
 
     if (collision_mapa(lista_objetos['player'], mapas) == True):
         lista_objetos['player'].setpos(posicao)
+    if (collision_mapa(lista_objetos['player'], mapas) == 'kill'):
+        game_over(screen, lista_objetos['player'], lista_inimigos, enemy_name, eventos_off, mapas)
 
     if (lista_objetos['chave'].pegou == 1):
         mapas.key()
@@ -78,7 +80,7 @@ def tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, t
             if (inimigo_colisao[1] == 'slime_grande1' or inimigo_colisao[1] == 'slime_grande2'):
                 lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.3)
             elif (inimigo_colisao[1] == 'estatua'):
-                lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.3)
+                lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.7)
             else:
                 lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*2.5)
             lista_objetos['player'].numeros_dano.showturtle()
@@ -91,8 +93,10 @@ def tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, t
             inimigo_colisao[0].shape('./enemy/sprite_transparente/sprite1.gif')
             inimigo_colisao[0].ontimer_continuar = False
             mapas.monstros_fase -= 1
-            if (mapas.monstros_fase <= 0):
+            if (mapas.monstros_fase <= 0 and mapas.mapa_atual != 3):
                 lista_objetos['player'].chave.showturtle()
+            elif (mapas.monstros_fase <= 0 and mapas.mapa_atual == 3):
+                mapas.key()
             ocorreu_colisao = True
     if (ocorreu_colisao == True or lista_objetos['flecha'].distancia >= 33):
         lista_objetos['flecha'].hideturtle(); screen.update(); eventos_on(screen)
