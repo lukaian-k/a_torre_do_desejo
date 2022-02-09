@@ -55,11 +55,10 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
                         lista_inimigos[i].ontimer_continuar = True
                         lista_inimigos[i].vida = enemy_list[i]['vida']
                         lista_inimigos[i].frame = 1
-                    lista_inimigos['estatua'].bola_de_fogo.setheading(0)
+                    for i in range(4):
+                        lista_inimigos[f'bola_final{i+1}'].ontimer_continuar = True
                     lista_inimigos['estatua'].bola_de_fogo.shape('./projectiles/bola_de_fogo/bola_de_fogo4.gif')
-                    lista_inimigos['estatua'].tempo_animacao = 0
                     lista_inimigos['boss_final'].shape('./enemy/boss_final/boss_final_left1.gif')
-                    lista_inimigos['boss_final'].tempo_animacao = 0
 
                     mapas.mapa_um()
                     return

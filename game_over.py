@@ -15,7 +15,16 @@ def game_over(screen, player, lista_inimigos, enemy_name, teclas_off, mapas):
         lista_inimigos[i].hideturtle()
         if (i == 'estatua'):
             lista_inimigos[i].bola_de_fogo.hideturtle()
+            lista_inimigos[i].bola_de_fogo.setheading(0)
+        if (i == 'estatua' or i == 'boss_final'):
+            lista_inimigos[i].tempo_animacao = 0
         lista_inimigos[i].setpos(0, 1000)
+
+    for i in range(4):
+        lista_inimigos[f'bola_final{i+1}'].ontimer_continuar = False
+        lista_inimigos[f'bola_final{i+1}'].hideturtle()
+        lista_inimigos[f'bola_final{i+1}'].setpos(0, 1000)
+        lista_inimigos[f'bola_final{i+1}'].tempo_animacao = 0
 
     screen.update()
     mapas.mapa_atual = 0
