@@ -85,7 +85,7 @@ def collision_mapa(objeto, mapas):
     #Colisoes do mapa dois
     elif (mapas.mapa_atual == 2):
         #Colisao com as paredes no mapa
-        coordenadas_paredes = [[851, 383], [-852, -366]]
+        coordenadas_paredes = [[851, 390], [-852, -345]]
         for i in range(len(coordenadas_paredes)):
             if (collision_screen(objeto, coordenadas_paredes[i][0], coordenadas_paredes[i][1]) == True):
                 return True
@@ -102,13 +102,13 @@ def collision_mapa(objeto, mapas):
     #Colisoes do mapa tres
     elif (mapas.mapa_atual == 3):
         #Colisao com as paredes no mapa
-        coordenadas_paredes = [[861, 393], [-862, -376]]
+        coordenadas_paredes = [[884, 393], [-870, -345]]
         for i in range(len(coordenadas_paredes)):
             if (collision_screen(objeto, coordenadas_paredes[i][0], coordenadas_paredes[i][1]) == True):
                 return True
 
         #Colisao com as estatuas do mapa
-        coordenadas_estatuas = [[-821, -333, 50, 50, 50, 50], [-817, 222, 50, 50, 50, 50], [821, 221, 50, 50, 50, 50], [823, -329, 50, 50, 50, 50]]
+        coordenadas_estatuas = [[-821, -333, 54, 54, 26, 72], [-817, 222, 54, 54, 26, 72], [821, 221, 54, 54, 26, 72], [823, -329, 54, 54, 26, 72]]
         for i in range(len(coordenadas_estatuas)):
             if (collision_square(objeto, coordenadas_estatuas[i][0], coordenadas_estatuas[i][2], coordenadas_estatuas[i][3], coordenadas_estatuas[i][1], coordenadas_estatuas[i][4], coordenadas_estatuas[i][5]) == True):
                 return True

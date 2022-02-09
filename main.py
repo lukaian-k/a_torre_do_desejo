@@ -499,6 +499,9 @@ class mapas():
     def fim():
         for i in enemy_name:
             lista_inimigos[i].hideturtle()
+        for i in range(4):
+            lista_inimigos[f'bola_final{i+1}'].ontimer_continuar = False
+            lista_inimigos[f'bola_final{i+1}'].hideturtle()
 
         nessa.setpos(1, -37)
         nessa.shape('./move/right/fim/right1.gif')
