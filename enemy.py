@@ -85,3 +85,22 @@ def boss_final_acao(screen, pos_player, enemy, all_frames):
         enemy.tempo_animacao += 1
     
     screen.update()
+
+#Bola final - acao
+def bola_final_acao(screen, pos_player, enemy, coor, all_frames):
+    if (enemy.tempo_animacao == 0):
+        enemy.setpos(coor)
+        enemy.setheading(enemy.towards(pos_player))
+
+    if (enemy.frame == all_frames+1):
+        enemy.frame = 1
+
+    if (enemy.tempo_animacao >= 50):
+        enemy.tempo_animacao = 0
+        enemy.shape(f'./projectiles/bola_final/bola_final{enemy.frame}.gif')
+        enemy.frame += 1
+    else:
+        enemy.forward(15)
+        enemy.tempo_animacao += 1
+    
+    screen.update()

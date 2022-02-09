@@ -344,7 +344,7 @@ def chamando_esqueleto():
 #Chama o boss final para o mapa
 def chamando_boss_final():
     #Criando algumas variaveis para guarda as posicoes dos objetos
-    pos_player = nessa.pos(); pos_boss_final = boss_final.pos()
+    pos_player = nessa.pos()
 
     #Se caso o atributo que permite os boss_final continuarem a se mover for true o laco comeca
     if (boss_final.ontimer_continuar == True and mapas.inimigos_quantidade['boss_final'] >= 1):
@@ -356,6 +356,45 @@ def chamando_boss_final():
 
     #Chama novamente a funcao
     janela.ontimer(chamando_boss_final, 100)
+#Chama o bola final para o mapa
+def chamando_bola_final():
+    #Criando algumas variaveis para guarda as posicoes dos objetos
+    pos_player = nessa.pos()
+
+    #Se caso o atributo que permite os bola_final_um continuarem a se mover for true o laco comeca
+    if (bola_final_um.ontimer_continuar == True and mapas.inimigos_quantidade['bola_final'] >= 1):
+        bola_final_um.showturtle()
+        bola_final_acao(janela, pos_player, bola_final_um, (-821, -333), 1)
+        #Caso a personagem morrer
+        if (collision_enemy(lista_inimigos, nessa)):
+            game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
+
+    #Se caso o atributo que permite os bola_final_dois continuarem a se mover for true o laco comeca
+    if (bola_final_dois.ontimer_continuar == True and mapas.inimigos_quantidade['bola_final'] >= 2):
+        bola_final_dois.showturtle()
+        bola_final_acao(janela, pos_player, bola_final_dois, (-817, 222), 1)
+        #Caso a personagem morrer
+        if (collision_enemy(lista_inimigos, nessa)):
+            game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
+
+    #Se caso o atributo que permite os bola_final_tres continuarem a se mover for true o laco comeca
+    if (bola_final_tres.ontimer_continuar == True and mapas.inimigos_quantidade['bola_final'] >= 3):
+        bola_final_tres.showturtle()
+        bola_final_acao(janela, pos_player, bola_final_tres, (821, 221), 1)
+        #Caso a personagem morrer
+        if (collision_enemy(lista_inimigos, nessa)):
+            game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
+
+    #Se caso o atributo que permite os bola_final_quatro continuarem a se mover for true o laco comeca
+    if (bola_final_quatro.ontimer_continuar == True and mapas.inimigos_quantidade['bola_final'] >= 4):
+        bola_final_quatro.showturtle()
+        bola_final_acao(janela, pos_player, bola_final_quatro, (823, -329), 1)
+        #Caso a personagem morrer
+        if (collision_enemy(lista_inimigos, nessa)):
+            game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
+
+    #Chama novamente a funcao
+    janela.ontimer(chamando_bola_final, 100)
 
 #Animacao do background - na lista adicione as informacoes: 1, quantidade de frames, diretorio, milissegundos
 def animation_background():
@@ -451,11 +490,11 @@ class mapas():
         for i in enemy_name:
             lista_inimigos[i].hideturtle()
 
-        mapas.inimigos_quantidade = {'esqueleto': 8, 'boss_final': 1}
+        mapas.inimigos_quantidade = {'esqueleto': 8, 'boss_final': 1, 'bola_final': 4}
         lista_inimigos['boss_final'].setpos(0, 301); lista_inimigos['boss_final'].shape('./enemy/boss_final/boss_final_left1.gif')
         lista_inimigos['esqueleto1'].setpos(-601, 307); lista_inimigos['esqueleto2'].setpos(-622, -303); lista_inimigos['esqueleto3'].setpos(612, 315); lista_inimigos['esqueleto4'].setpos(599, -314); lista_inimigos['esqueleto5'].setpos(-536, 109); lista_inimigos['esqueleto6'].setpos(-527, -118); lista_inimigos['esqueleto7'].setpos(350, 121); lista_inimigos['esqueleto8'].setpos(359, -82)
         if (mapas.mapa3_reiniciado == False):
-            chamando_esqueleto(); chamando_boss_final()
+            chamando_esqueleto(); chamando_boss_final(); chamando_bola_final()
 
     def fim():
         for i in enemy_name:
@@ -539,11 +578,14 @@ add_shapes(janela, ['./enemy/sprite_transparente/sprite', 1])
 #Adiciona os numeros para o dano do jogo
 add_shapes(janela, ['./objects/numeros/numero', 9])
 
-#Adiciona os numeros para o dano do jogo
+#Adiciona a bola de fogo
 add_shapes(janela, ['./projectiles/bola_de_fogo/bola_de_fogo', 4])
 
 #Adiciona o portal
 add_shapes(janela, ['./objects/portal', 1])
+
+#Adiciona a bola final
+add_shapes(janela, ['./projectiles/bola_final/bola_final', 1])
 
 
 #Criacao do player + objeto (flecha)
@@ -640,9 +682,24 @@ esqueleto_sete.player = False; esqueleto_sete.frame = 1; esqueleto_sete.vida = e
 #Criando o esqueleto8
 esqueleto_oito = esqueleto_um.clone(); esqueleto_oito.setpos(0, 1000) #Clona um objeto
 esqueleto_oito.player = False; esqueleto_oito.frame = 1; esqueleto_oito.vida = enemy_list['esqueleto8']['vida']; esqueleto_oito.tamanho = [20, 20, 29, 29]; esqueleto_oito.ontimer_continuar = True; esqueleto_oito.voador = False #Cria alguns atributos
+
 #Boss final
 boss_final = add_objects(f'{enemy_list["boss_final"]["diretorio"]}_left1.gif', 0, True, 0, 1000) #Adiciona um objeto no turtle
 boss_final.tempo_animacao = 0; boss_final.player = False; boss_final.frame = 1; boss_final.vida = enemy_list['boss_final']['vida']; boss_final.tamanho = [103, 103, 158, 158]; boss_final.ontimer_continuar = True; boss_final.voador = True #Cria alguns atributos
+
+#Bola final
+#Criando a bola_final1
+bola_final_um = add_objects('./projectiles/bola_final/bola_final1.gif', 0, True, 0, 1000) #Adiciona um objeto no turtle
+bola_final_um.tempo_animacao = 0; bola_final_um.player = False; bola_final_um.frame = 1; bola_final_um.ontimer_continuar = True; bola_final_um.voador = True #Cria alguns atributos
+#Criando a bola_final2
+bola_final_dois = bola_final_um.clone(); bola_final_dois.setpos(0, 1000) #Clona um objeto
+bola_final_dois.tempo_animacao = 0; bola_final_dois.player = False; bola_final_dois.frame = 1; bola_final_dois.ontimer_continuar = True; bola_final_dois.voador = True #Cria alguns atributos
+#Criando a bola_final3
+bola_final_tres = bola_final_um.clone(); bola_final_tres.setpos(0, 1000) #Clona um objeto
+bola_final_tres.tempo_animacao = 0; bola_final_tres.player = False; bola_final_tres.frame = 1; bola_final_tres.ontimer_continuar = True; bola_final_tres.voador = True #Cria alguns atributos
+#Criando a bola_final4
+bola_final_quatro = bola_final_um.clone(); bola_final_quatro.setpos(0, 1000) #Clona um objeto
+bola_final_quatro.tempo_animacao = 0; bola_final_quatro.player = False; bola_final_quatro.frame = 1; bola_final_quatro.ontimer_continuar = True; bola_final_quatro.voador = True #Cria alguns atributos
 
 #Lista de todos os inimigos criados
 lista_inimigos = {'slime1': slime, 'slime2': slime_dois,
@@ -651,7 +708,8 @@ lista_inimigos = {'slime1': slime, 'slime2': slime_dois,
 'estatua': estatua,
 'demonio1': demonio_um, 'demonio2': demonio_dois, 'demonio3': demonio_tres, 'demonio4': demonio_quatro,
 'esqueleto1': esqueleto_um, 'esqueleto2': esqueleto_dois, 'esqueleto3': esqueleto_tres, 'esqueleto4': esqueleto_quatro, 'esqueleto5': esqueleto_cinco, 'esqueleto6': esqueleto_seis, 'esqueleto7': esqueleto_sete, 'esqueleto8': esqueleto_oito,
-'boss_final': boss_final}
+'boss_final': boss_final,
+'bola_final_um': bola_final_um, 'bola_final_dois': bola_final_dois, 'bola_final_tres': bola_final_tres, 'bola_final_quatro': bola_final_quatro}
 
 
 #Iniciando o mapa um

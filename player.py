@@ -1,6 +1,5 @@
 #Imports de libs
-import turtle
-from time import sleep
+import turtle; from time import sleep
 #Imports de arquivos da propria pasta
 from collision import *; from game_over import game_over; from enemy import enemy_name
 
