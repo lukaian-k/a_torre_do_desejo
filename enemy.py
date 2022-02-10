@@ -1,15 +1,15 @@
-#Lista de todos os os inimigos do jogo - aqui encontra-se duas informacoes, o diretorio dos .gif e quantos .gif tem cada um dos inimigos
-enemy_list = {'slime1': {'diretorio': './enemy/slime/slime', 'frames': 5, 'vida': 1},
-'slime2': {'diretorio': './enemy/slime/slime', 'frames': 5, 'vida': 1},
-'morcego1': {'diretorio': './enemy/morcego/morcego', 'frames': 8, 'vida': 1},
-'morcego2': {'diretorio': './enemy/morcego/morcego', 'frames': 8, 'vida': 1},
-'slime_grande1': {'diretorio': './enemy/slime_grande/slime_grande', 'frames': 4, 'vida': 1},
-'slime_grande2': {'diretorio': './enemy/slime_grande/slime_grande', 'frames': 4, 'vida': 1},
+#Lista de todos os os inimigos do jogo - aqui encontra-se duas informacoes, o diretorio dos .gif e quantos .gif tem cada um dos inimigos (DICIONARIO)
+enemy_list = {'slime1': {'diretorio': './enemy/slime/slime', 'frames': 5, 'vida': 3},
+'slime2': {'diretorio': './enemy/slime/slime', 'frames': 5, 'vida': 3},
+'morcego1': {'diretorio': './enemy/morcego/morcego', 'frames': 8, 'vida': 2},
+'morcego2': {'diretorio': './enemy/morcego/morcego', 'frames': 8, 'vida': 2},
+'slime_grande1': {'diretorio': './enemy/slime_grande/slime_grande', 'frames': 4, 'vida': 5},
+'slime_grande2': {'diretorio': './enemy/slime_grande/slime_grande', 'frames': 4, 'vida': 5},
 'estatua': {'diretorio': './enemy/estatua/estatua', 'frames': 1, 'vida': 1},
-'demonio1': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
-'demonio2': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
-'demonio3': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
-'demonio4': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 1},
+'demonio1': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 6},
+'demonio2': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 6},
+'demonio3': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 6},
+'demonio4': {'diretorio': './enemy/demonio/demonio', 'frames': 6, 'vida': 6},
 'esqueleto1': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
 'esqueleto2': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
 'esqueleto3': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
@@ -18,8 +18,7 @@ enemy_list = {'slime1': {'diretorio': './enemy/slime/slime', 'frames': 5, 'vida'
 'esqueleto6': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
 'esqueleto7': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
 'esqueleto8': {'diretorio': './enemy/esqueleto/esqueleto', 'frames': 6, 'vida': 1},
-'boss_final': {'diretorio': './enemy/boss_final/boss_final', 'frames': 5, 'vida': 1}}
-
+'boss_final': {'diretorio': './enemy/boss_final/boss_final', 'frames': 5, 'vida': 21}}
 #Lista inimigos - uma lista que contem apenas as chaves do dicionario enemy_list
 enemy_name = list(enemy_list.keys())
 
@@ -38,7 +37,7 @@ def enemy_persegue(screen, pos_player, name, enemy, all_frames, forward):
         screen.update(); enemy[name].frame += 1
     else:
         enemy[name].frame = 1
-
+#Estatua - acao
 def acao_estatua(screen, enemy, player, collision_enemy_projectiles, all_frames):
     if (enemy.tempo_animacao == 0):
         enemy.bola_de_fogo.setpos(12, -14)
@@ -48,14 +47,11 @@ def acao_estatua(screen, enemy, player, collision_enemy_projectiles, all_frames)
 
     enemy.bola_de_fogo.showturtle()
     if (enemy.tempo_animacao >= 50):
-        enemy.tempo_animacao = 0
-        enemy.bola_de_fogo.hideturtle()
+        enemy.tempo_animacao = 0; enemy.bola_de_fogo.hideturtle()
         enemy.bola_de_fogo.shape(f'./projectiles/bola_de_fogo/bola_de_fogo{enemy.frame}.gif')
-        enemy.bola_de_fogo.right(90)
-        enemy.frame += 1
+        enemy.bola_de_fogo.right(90); enemy.frame += 1
     else:
-        enemy.bola_de_fogo.forward(15)
-        enemy.tempo_animacao += 1
+        enemy.bola_de_fogo.forward(15); enemy.tempo_animacao += 1
 
     if (enemy.frame == 1 or enemy.frame == 3):
         enemy.bola_de_fogo.tamanho = [25, 25, 94, 94]
@@ -64,33 +60,25 @@ def acao_estatua(screen, enemy, player, collision_enemy_projectiles, all_frames)
     
     #Caso a personagem morrer
     if (collision_enemy_projectiles(enemy.bola_de_fogo, player) == True):
-        enemy.bola_de_fogo.hideturtle()
-        return True
+        enemy.bola_de_fogo.hideturtle(); return True
     screen.update()
-
 #Boss final - acao
 def boss_final_acao(screen, pos_player, enemy, all_frames):
     if (enemy.tempo_animacao == 0):
         enemy.setheading(enemy.towards(pos_player))
 
-    if (enemy.frame == all_frames+1):
-        enemy.frame = 1
-
     if (enemy.tempo_animacao >= 50):
         enemy.tempo_animacao = 0
-        enemy.shape(f'./enemy/boss_final/boss_final_left{enemy.frame}.gif')
-        enemy.frame += 1
     else:
-        enemy.forward(10)
-        enemy.tempo_animacao += 1
-    
-    screen.update()
+        enemy.forward(10); enemy.tempo_animacao += 1
 
+    if (enemy.frame == all_frames+1):
+        enemy.frame = 1
+    enemy.shape(f'./enemy/boss_final/boss_final_left{enemy.frame}.gif'); enemy.frame += 1; screen.update()
 #Bola final - acao
 def bola_final_acao(screen, pos_player, enemy, coor):
     if (enemy.tempo_animacao == 0):
-        enemy.setpos(coor)
-        enemy.setheading(enemy.towards(pos_player))
+        enemy.setpos(coor); enemy.setheading(enemy.towards(pos_player))
     enemy.tempo_animacao += 1
 
     if (enemy.tempo_animacao >= 130):
@@ -99,5 +87,4 @@ def bola_final_acao(screen, pos_player, enemy, coor):
         enemy.backward(15)
     else:
         enemy.forward(15)
-    
     screen.update()

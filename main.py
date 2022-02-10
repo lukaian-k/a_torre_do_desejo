@@ -68,8 +68,7 @@ def walk_left():
 #Cria todos os eventos de teclado e mouse
 def teclas_on(screen):
     #Chama as funcoes para movimentar o personagem ao clicar a tecla referente a cada evento
-    funcoes = [walk_up, walk_down, walk_right, walk_left]
-    teclas = 'wsda'
+    funcoes = [walk_up, walk_down, walk_right, walk_left]; teclas = 'wsda'
     for i in range(len(funcoes)):
         screen.onkeypress(funcoes[i], teclas[i])
     #Ao clicar com o botao esquerdo do mouse o player atira uma flecha no local onde ocorreu o clique
@@ -85,7 +84,7 @@ def shot_bow(x, y):
     atack_bow(x, y, janela, lista_objetos, lista_inimigos, teclas_on, teclas_off, time_shot, mapas)
 #Reativa a permissao para o arco pode atirar novamente
 def time_shot():
-    nessa.arrow.ataque = True
+    nessa.arrow.ataque = True; nessa.numeros_dano.hideturtle()
 
 #Inimigos
 #Chama os slimes para o mapa
@@ -415,27 +414,19 @@ def animation_background():
 #Criando um objeto com elementos relacionados ao mapa do jogo
 class mapas():
     #Variaveis
-    animacao_fundo = []
-    ontimer_continuar = True
-    mapa_atual = 1
-    mapa1_reiniciado = False
-    mapa2_reiniciado = False
-    mapa3_reiniciado = False
-    monstros_fase = 6
-    inimigos_quantidade = {}
-    final = False
+    animacao_fundo = []; ontimer_continuar = True; final = False
+    mapa_atual = 1; mapa1_reiniciado = False; mapa2_reiniciado = False; mapa3_reiniciado = False
+    monstros_fase = 6; inimigos_quantidade = {}
 
     #Funcoes
     #Chamada quando pega a chave/entra no portal/elimina todos os inimigos do mapa tres
     def key():
         if (mapas.mapa_atual == 1):
-            nessa.chave.pegou = 2
-            nessa.chave.hideturtle()
+            nessa.chave.pegou = 2; nessa.chave.hideturtle()
             mapas.animacao_fundo = [1, 4, './maps/map1/aberto/mapa', 100]
 
         elif (mapas.mapa_atual == 2):
-            nessa.chave.pegou = 2
-            nessa.chave.hideturtle()
+            nessa.chave.pegou = 2; nessa.chave.hideturtle()
             mapas.mapa_tres()
 
         elif (mapas.mapa_atual == 3):
@@ -471,14 +462,9 @@ class mapas():
         #Posicao dos elementos na lista: 0 = 1, 1 = quantidade de frames, 2 = diretorio, 3 = milissegundos
         mapas.animacao_fundo = [1, 1, './maps/map2/mapa', 100]
         #Alterando algumas propriedades da nessa e chave
-        nessa.shape('./move/right/mapa2/right1.gif')
-        nessa.chave.pegou = 0
-        nessa.chave.setpos(12, -14)
-        nessa.chave.shape('./objects/portal1.gif')
+        nessa.shape('./move/right/mapa2/right1.gif'); nessa.chave.pegou = 0; nessa.chave.setpos(12, -14); nessa.chave.shape('./objects/portal1.gif')
         #Defini o mapa e quantidade de montros
-        mapas.mapa_atual = 2
-        mapas.monstros_fase = 5
-        nessa.setpos(283, -347)
+        mapas.mapa_atual = 2; mapas.monstros_fase = 5; nessa.setpos(283, -347)
         #Oculta todos os monstros
         for i in enemy_name:
             lista_inimigos[i].hideturtle()
@@ -499,12 +485,9 @@ class mapas():
         #Posicao dos elementos na lista: 0 = 1, 1 = quantidade de frames, 2 = diretorio, 3 = milissegundos
         mapas.animacao_fundo = [1, 1, './maps/map3/mapa', 100]
         #Alterando algumas propriedades da nessa e chave
-        nessa.shape('./move/right/mapa3/right1.gif')
-        nessa.setpos(12, -14)
-        nessa.chave.pegou = 0
+        nessa.shape('./move/right/mapa3/right1.gif'); nessa.setpos(12, -14); nessa.chave.pegou = 0
         #Defini o mapa e quantidade de montros
-        mapas.mapa_atual = 3
-        mapas.monstros_fase = 9
+        mapas.mapa_atual = 3; mapas.monstros_fase = 9
         #Oculta todos os monstros
         for i in enemy_name:
             lista_inimigos[i].hideturtle()
@@ -529,8 +512,7 @@ class mapas():
             lista_inimigos[f'bola_final{i+1}'].hideturtle()
 
         #Alterando algumas propriedades da nessa
-        nessa.setpos(1, -37)
-        nessa.shape('./move/right/fim/right1.gif')
+        nessa.setpos(1, -37); nessa.shape('./move/right/fim/right1.gif')
         #Animacao background
         #Posicao dos elementos na lista: 0 = 1, 1 = quantidade de frames, 2 = diretorio, 3 = milissegundos
         mapas.animacao_fundo = [1, 1, './maps/fim/fim', 100]
@@ -542,34 +524,23 @@ class mapas():
     #Finais possiveis
     #Chama o final ruim
     def poder():
-        mapas.ontimer_continuar = False
-        nessa.hideturtle()
-        janela.bgpic('./history/finais/ruim/ruim1.gif')
-        janela.update()
-
-        sleep(10)
-        mapas.final = True
-        game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
+        #Ocultando/trocando o fundo da tela
+        mapas.ontimer_continuar = False; nessa.hideturtle(); janela.bgpic('./history/finais/ruim/ruim1.gif'); janela.update()
+        #Trava a tela/fala que o jogo finalizou/chama a funcao que reseta tudo
+        sleep(10); mapas.final = True; game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
     #Chama o final neutro
     def riquezas():
-        mapas.ontimer_continuar = False
-        nessa.hideturtle()
-        janela.bgpic('./history/finais/neutro/neutro1.gif')
-        janela.update()
-
-        sleep(10)
-        mapas.final = True
-        game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
+        #Ocultando/trocando o fundo da tela
+        mapas.ontimer_continuar = False; nessa.hideturtle(); janela.bgpic('./history/finais/neutro/neutro1.gif'); janela.update()
+        #Trava a tela/fala que o jogo finalizou/chama a funcao que reseta tudo
+        sleep(10); mapas.final = True; game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
     #Chama o final bom
     def liberdade():
-        mapas.ontimer_continuar = False
-        nessa.hideturtle()
-        janela.bgpic('./history/finais/bom/bom1.gif')
-        janela.update()
+        #Ocultando/trocando o fundo da tela
+        mapas.ontimer_continuar = False; nessa.hideturtle(); janela.bgpic('./history/finais/bom/bom1.gif'); janela.update()
+        #Trava a tela/fala que o jogo finalizou/chama a funcao que reseta tudo
+        sleep(10); mapas.final = True; game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
 
-        sleep(10)
-        mapas.final = True
-        game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
 
 #Main
 
@@ -580,7 +551,6 @@ gif_walk_default_number = [1, 1, 1, 1] #Elemento 0 = up, 1 = down, 2 = right, 3 
 janela = init_screen(1920, 1080, './maps/map1/fechado/mapa1.gif', 'A torre do desejo')
 #Tirando a atualizacao dos frames
 janela.tracer(0)
-
 #Habilita eventos na janela
 janela.listen()
 
@@ -613,21 +583,17 @@ for i in enemy_name:
 
 #Adiciona um sprite tranparente
 add_shapes(janela, ['./enemy/sprite_transparente/sprite', 1])
-
 #Adiciona os numeros para o dano do jogo
-add_shapes(janela, ['./objects/numeros/numero', 9])
-
+add_shapes(janela, ['./objects/numeros/numero', 20])
 #Adiciona a bola de fogo
 add_shapes(janela, ['./projectiles/bola_de_fogo/bola_de_fogo', 4])
-
 #Adiciona o portal
 add_shapes(janela, ['./objects/portal', 1])
-
 #Adiciona a bola final
 add_shapes(janela, ['./projectiles/bola_final/bola_final', 1])
 
 
-#Criacao do player + objeto (flecha)
+#Criacao do player + objeto (flecha) + numeros do dano
 
 #Player
 nessa = add_objects('./move/right/mapa1/right1.gif', 0, False, -810, 277) #Cria a nessa (personagem principal do jogo)
@@ -699,7 +665,7 @@ demonio_quatro.frame = 1; demonio_quatro.vida = enemy_list['demonio4']['vida']; 
 #Esqueletos
 #Criando o esqueleto1
 esqueleto_um = add_objects(f'{enemy_list["esqueleto1"]["diretorio"]}_left1.gif', 0, True, 0, 1000) #Adiciona um objeto no turtle
-esqueleto_um.player = False; esqueleto_um.frame = 1; esqueleto_um.vida = enemy_list['demonio1']['vida']; esqueleto_um.tamanho = [20, 20, 29, 29]; esqueleto_um.ontimer_continuar = True; esqueleto_um.voador = False #Cria alguns atributos
+esqueleto_um.player = False; esqueleto_um.frame = 1; esqueleto_um.vida = enemy_list['esqueleto1']['vida']; esqueleto_um.tamanho = [20, 20, 29, 29]; esqueleto_um.ontimer_continuar = True; esqueleto_um.voador = False #Cria alguns atributos
 #Criando o esqueleto2
 esqueleto_dois = esqueleto_um.clone(); esqueleto_dois.setpos(0, 1000) #Clona um objeto
 esqueleto_dois.player = False; esqueleto_dois.frame = 1; esqueleto_dois.vida = enemy_list['esqueleto2']['vida']; esqueleto_dois.tamanho = [20, 20, 29, 29]; esqueleto_dois.ontimer_continuar = True; esqueleto_dois.voador = False #Cria alguns atributos

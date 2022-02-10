@@ -26,9 +26,7 @@ def walk_main(screen, lista_objetos, lista_inimigos, direcao, distancia, frame, 
 
     if (lista_objetos['chave'].pegou == 1):
         mapas.key()
-    screen.update()
-    eventos_on(screen)
-    return frame
+    screen.update(); eventos_on(screen); return frame
 #Reseta os frames da animacao da direcao do player - é uma dependencia da funcao da funcao da movimentacao. ela armazena qual tecla foi apertada por ultimo para que continue a animacao em sequencia na ordem certa de cada direcao
 def reset_frame_walk(frame_up, frame_down, frame_right, frame_left):
     return [frame_up, frame_down, frame_right, frame_left]
@@ -40,8 +38,7 @@ def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_o
     if (lista_objetos['flecha'].ataque == True and mapas.monstros_fase > 0):
         eventos_off('wsda', screen)
         lista_objetos['flecha'].setpos(lista_objetos['player'].pos())
-        angulo_arrow = lista_objetos['flecha'].towards(x, y)
-        lista_objetos['flecha'].setheading(angulo_arrow)
+        angulo_arrow = lista_objetos['flecha'].towards(x, y); lista_objetos['flecha'].setheading(angulo_arrow)
 
         #Troca o icone da flecha de acordo com a direcao da dela
         if (0 <= angulo_arrow <= 29 or 330 <= angulo_arrow <= 360): #Direita
@@ -61,49 +58,51 @@ def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_o
         elif (300 <= angulo_arrow <= 329): #Vertical - inferior direito
             lista_objetos['flecha'].shape('./projectiles/arrow/arrow7.gif')
         
-        lista_objetos['flecha'].showturtle()
-        tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas)
+        #Deixando a flecha visivel e chamando a segunda parte da acao do tiro dela
+        lista_objetos['flecha'].showturtle(); tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas)
 #Segunda parte do tiro do arco
 def tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas):
-    ocorreu_colisao = False
-    screen.update()
-    lista_objetos['flecha'].forward(10); screen.update()
+    #Atualiza o estado da tela e faz a flecha anda um pouco
+    ocorreu_colisao = False; screen.update(); lista_objetos['flecha'].forward(10); screen.update()
+
+    #Checa se ocorreu alguma colisao com alguma coisa - parede ou cenario
     if (collision_mapa(lista_objetos['flecha'], mapas) == True):
         ocorreu_colisao = True
+
+    #Checa se ocorreu alguma colisao com algum inimigo
     inimigo_colisao = collision_enemy(lista_inimigos, lista_objetos['flecha'])
     if (inimigo_colisao != None):
         if (inimigo_colisao[1] == 'estatua' and mapas.monstros_fase > 1):
             pass
         else:
             inimigo_colisao[0].vida -= 1
-
+        #Se a vida do inimigo for maior que zero ira exibir o numero de hits que ainda falta para matar o inimigo
+        #Caso o inimigo nao tenha morrido ainda
         if (inimigo_colisao[0].vida > 0):
             if (inimigo_colisao[1] == 'slime_grande1' or inimigo_colisao[1] == 'slime_grande2'):
                 lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.3)
-            elif (inimigo_colisao[1] == 'estatua'):
+            elif (inimigo_colisao[1] == 'estatua' or inimigo_colisao[1] == 'demonio1' or inimigo_colisao[1] == 'demonio2' or inimigo_colisao[1] == 'demonio3' or inimigo_colisao[1] == 'demonio4'):
                 lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.7)
+            elif (inimigo_colisao[1] == 'boss_final'):
+                lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*1.1)
             else:
                 lista_objetos['player'].numeros_dano.setpos(inimigo_colisao[0].xcor(), inimigo_colisao[0].ycor()+inimigo_colisao[0].tamanho[2]*2.5)
-            lista_objetos['player'].numeros_dano.showturtle()
-            lista_objetos['player'].numeros_dano.shape(f'./objects/numeros/numero{inimigo_colisao[0].vida}.gif')
-            screen.update()
-            sleep(0.2)
-            lista_objetos['player'].numeros_dano.hideturtle()
+            
+            lista_objetos['player'].numeros_dano.showturtle(); lista_objetos['player'].numeros_dano.shape(f'./objects/numeros/numero{inimigo_colisao[0].vida}.gif'); screen.update()
             ocorreu_colisao = True
+        #Caso o inimigo tenha morrido
         else:
-            inimigo_colisao[0].shape('./enemy/sprite_transparente/sprite1.gif')
-            inimigo_colisao[0].ontimer_continuar = False
-            mapas.monstros_fase -= 1
+            inimigo_colisao[0].shape('./enemy/sprite_transparente/sprite1.gif'); inimigo_colisao[0].ontimer_continuar = False; mapas.monstros_fase -= 1
             if (mapas.monstros_fase <= 0 and mapas.mapa_atual != 3):
                 lista_objetos['player'].chave.showturtle()
             elif (mapas.monstros_fase <= 0 and mapas.mapa_atual == 3):
                 mapas.key()
             ocorreu_colisao = True
+
+    #Caso tenha ocorrido uma colisao ou a flecha tenha chegado na sua distancia maxima
     if (ocorreu_colisao == True or lista_objetos['flecha'].distancia >= 33):
-        lista_objetos['flecha'].hideturtle(); screen.update(); eventos_on(screen)
+        lista_objetos['flecha'].hideturtle(); screen.update(); eventos_on(screen); lista_objetos['flecha'].distancia = 0
         lista_objetos['flecha'].ataque = False; screen.ontimer(time_shot, 1000)
-        lista_objetos['flecha'].distancia = 0
+    #Caso ainda nao tenha colidido em nada ou a flecha ainda nao tenha atingido sua distancia maxima
     else:
-        lista_objetos['flecha'].distancia += 1
-        screen.update()
-        tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas)
+        lista_objetos['flecha'].distancia += 1; screen.update(); tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas)

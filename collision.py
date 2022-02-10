@@ -51,7 +51,7 @@ def collision_enemy_projectiles(projectiles, objeto):
         return True
 
 #Colisoes de cada mapa - aqui esta cada colisao com o cenario de cada mapa
-#Mapa1 - Checa se aconteceu alguma colisao em alguma regiao do cenario
+#Mapas - Checa se aconteceu alguma colisao em alguma regiao do cenario
 def collision_mapa(objeto, mapas):
     #Colisoes do mapa um
     if (mapas.mapa_atual == 1):
@@ -73,11 +73,13 @@ def collision_mapa(objeto, mapas):
                     return True
 
         #Colisao com a chave
+        #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
         if (collision_square(objeto, 670, 25, 25, 160, 17, 17) == True and mapas.monstros_fase <= 0 and objeto.chave.pegou == 0):
             objeto.chave.pegou = 1
             return
 
         #Colisao com a porta
+        #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
         if (collision_square(objeto, 283, 25, 25, -48, 17, 17) == True and mapas.monstros_fase <= 0 and objeto.chave.pegou == 2):
             mapas.mapa_dois()
             return
@@ -91,10 +93,12 @@ def collision_mapa(objeto, mapas):
                 return True
 
         #Colisao com a estatua
+        #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
         if (collision_square(objeto, 11, 143, 143, 66, 103, 0) == True and mapas.monstros_fase > 0):
             return True
 
         #Colisao com o portal
+        #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
         if (collision_square(objeto, 12, 60, 60, -14, 60, 60) == True and mapas.monstros_fase <= 0 and objeto.chave.pegou == 0):
             objeto.chave.pegou = 1
             return
@@ -108,12 +112,14 @@ def collision_mapa(objeto, mapas):
                 return True
 
         #Colisao com as estatuas do mapa
-        coordenadas_estatuas = [[-821, -333, 54, 54, 26, 72], [-817, 222, 54, 54, 26, 72], [821, 221, 54, 54, 26, 72], [823, -329, 54, 54, 26, 72]]
+        #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
+        coordenadas_estatuas = [[-821, -333, 54, 54, 26, 164], [-817, 222, 54, 54, 26, 164], [821, 221, 54, 54, 26, 164], [823, -329, 54, 54, 26, 164]]
         for i in range(len(coordenadas_estatuas)):
             if (collision_square(objeto, coordenadas_estatuas[i][0], coordenadas_estatuas[i][2], coordenadas_estatuas[i][3], coordenadas_estatuas[i][1], coordenadas_estatuas[i][4], coordenadas_estatuas[i][5]) == True):
                 return True
 
         #Colisao com os espinhos do mapa
+        #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
         if (objeto.player == True):
             coordenadas_espinhos = [[-688, -309, 35, 35, 30, 30], [-480, -114, 35, 35, 30, 30], [-673, -7, 35, 35, 30, 30], [-480, 107, 35, 35, 30, 30], [-688, 316, 35, 35, 30, 30], [-80, -5, 35, 35, 30, 30], [288, 109, 35, 35, 30, 30], [288, -116, 35, 35, 30, 30], [687, 316, 35, 35, 30, 30], [670, 9, 35, 35, 30, 30], [688, -323, 35, 35, 30, 30]]
             for i in range(len(coordenadas_espinhos)):
@@ -129,6 +135,7 @@ def collision_mapa(objeto, mapas):
                 return True
 
         #Colisao com as escolhas do mapa
+        #Posicao dos elementos na lista: 0 = x, 1 = y, 2 = x_menos, 3 = x_mais, 4 = y_menos, 5 = y_mais
         coordenadas_escolhas = [[-10, 275, 87, 87, 49, 49], [553, -287, 39, 39, 45, 45], [-549, -290, 38, 38, 45, 45]]
         for i in range(len(coordenadas_escolhas)):
             if (collision_square(objeto, coordenadas_escolhas[i][0], coordenadas_escolhas[i][2], coordenadas_escolhas[i][3], coordenadas_escolhas[i][1], coordenadas_escolhas[i][4], coordenadas_escolhas[i][5]) == True):
