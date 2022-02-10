@@ -399,9 +399,7 @@ def chamando_bola_final():
 #Animacao do background - na lista adicione as informacoes: 1, quantidade de frames, diretorio, milissegundos
 def animation_background():
     if (mapas.ontimer_continuar == True):
-        if (mapas.final == True):
-            game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
-        elif (mapas.animacao_fundo[0] < mapas.animacao_fundo[1]+1):
+        if (mapas.animacao_fundo[0] < mapas.animacao_fundo[1]+1):
             janela.bgpic(f'{mapas.animacao_fundo[2]}{mapas.animacao_fundo[0]}.gif')
             mapas.animacao_fundo[0] += 1
         else:
@@ -412,7 +410,7 @@ def animation_background():
 #Objetos
 #Criando um objeto com elementos relacionados ao mapa do jogo
 class mapas():
-    #Variaveis/funcoes
+    #Variaveis
     animacao_fundo = []
     ontimer_continuar = True
     mapa_atual = 1
@@ -424,6 +422,7 @@ class mapas():
     final = False
 
     #Funcoes
+    #Chamada quando pega a chave/entra no portal/elimina todos os inimigos do mapa 3
     def key():
         if (mapas.mapa_atual == 1):
             nessa.chave.pegou = 2
@@ -512,28 +511,34 @@ class mapas():
 
     #Escolhas
     def poder():
+        mapas.ontimer_continuar = False
         nessa.hideturtle()
         janela.bgpic('./history/finais/ruim/ruim1.gif')
         janela.update()
 
-        mapas.final = True
         sleep(10)
+        mapas.final = True
+        game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
 
     def riquezas():
+        mapas.ontimer_continuar = False
         nessa.hideturtle()
         janela.bgpic('./history/finais/neutro/neutro1.gif')
         janela.update()
 
-        mapas.final = True
         sleep(10)
+        mapas.final = True
+        game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
 
     def liberdade():
+        mapas.ontimer_continuar = False
         nessa.hideturtle()
         janela.bgpic('./history/finais/bom/bom1.gif')
         janela.update()
 
-        mapas.final = True
         sleep(10)
+        mapas.final = True
+        game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
 
 #Main
 
