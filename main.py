@@ -11,6 +11,7 @@ from player import *; from functions_turtle import *; from collision import *; f
 def walk_up():
     global gif_walk_default_number
     
+    #Chama a funcao principal de andar com o sprite correto de cada fase
     if (mapas.mapa_atual == 1):
         frame = walk_main(janela, lista_objetos, lista_inimigos, 90, 10, gif_walk_default_number[0], 4, './move/up/mapa1/up', teclas_on, teclas_off, mapas)
     elif (mapas.mapa_atual == 2):
@@ -24,6 +25,7 @@ def walk_up():
 def walk_down():
     global gif_walk_default_number
 
+    #Chama a funcao principal de andar com o sprite correto de cada fase
     if (mapas.mapa_atual == 1):
         frame = walk_main(janela, lista_objetos, lista_inimigos, 270, 10, gif_walk_default_number[1], 4, './move/down/mapa1/down', teclas_on, teclas_off, mapas)
     elif (mapas.mapa_atual == 2):
@@ -37,6 +39,7 @@ def walk_down():
 def walk_right():
     global gif_walk_default_number
 
+    #Chama a funcao principal de andar com o sprite correto de cada fase
     if (mapas.mapa_atual == 1):
         frame = walk_main(janela, lista_objetos, lista_inimigos, 0, 10, gif_walk_default_number[2], 6, './move/right/mapa1/right', teclas_on, teclas_off, mapas)
     elif (mapas.mapa_atual == 2):
@@ -50,6 +53,7 @@ def walk_right():
 def walk_left():
     global gif_walk_default_number
 
+    #Chama a funcao principal de andar com o sprite correto de cada fase
     if (mapas.mapa_atual == 1):
         frame = walk_main(janela, lista_objetos, lista_inimigos, 180, 10, gif_walk_default_number[3], 6, './move/left/mapa1/left', teclas_on, teclas_off, mapas)
     elif (mapas.mapa_atual == 2):
@@ -422,7 +426,7 @@ class mapas():
     final = False
 
     #Funcoes
-    #Chamada quando pega a chave/entra no portal/elimina todos os inimigos do mapa 3
+    #Chamada quando pega a chave/entra no portal/elimina todos os inimigos do mapa tres
     def key():
         if (mapas.mapa_atual == 1):
             nessa.chave.pegou = 2
@@ -437,6 +441,7 @@ class mapas():
         elif (mapas.mapa_atual == 3):
             mapas.fim()
 
+    #Chama o mapa um
     def mapa_um():
         #Lista para selecionar quantos inimigos serao utilizados
         mapas.inimigos_quantidade = {'slime': 2, 'morcego': 2, 'slime_grande': 2}
@@ -460,56 +465,82 @@ class mapas():
         #Animacao background
         #Posicao dos elementos na lista: 0 = 1, 1 = quantidade de frames, 2 = diretorio, 3 = milissegundos
         mapas.animacao_fundo = [1, 4, './maps/map1/fechado/mapa', 100]; animation_background()
-
+    #Chama o mapa dois
     def mapa_dois():
+        #Animacao background
+        #Posicao dos elementos na lista: 0 = 1, 1 = quantidade de frames, 2 = diretorio, 3 = milissegundos
         mapas.animacao_fundo = [1, 1, './maps/map2/mapa', 100]
+        #Alterando algumas propriedades da nessa e chave
         nessa.shape('./move/right/mapa2/right1.gif')
         nessa.chave.pegou = 0
         nessa.chave.setpos(12, -14)
         nessa.chave.shape('./objects/portal1.gif')
+        #Defini o mapa e quantidade de montros
         mapas.mapa_atual = 2
         mapas.monstros_fase = 5
         nessa.setpos(283, -347)
+        #Oculta todos os monstros
         for i in enemy_name:
             lista_inimigos[i].hideturtle()
 
+        #Lista para selecionar quantos inimigos serao utilizados
         mapas.inimigos_quantidade = {'estatua': 1, 'demonio': 4}
+
+        #Chamando os inimigos do mapa
+        #Estatua
         lista_inimigos['estatua'].setpos(11, 66); lista_inimigos['estatua'].shape('./enemy/estatua/estatua_left1.gif')
+        #Demonios
         lista_inimigos['demonio1'].setpos(-479, -264); lista_inimigos['demonio2'].setpos(-651, -50); lista_inimigos['demonio3'].setpos(611, 136); lista_inimigos['demonio4'].setpos(240, 313)
         if (mapas.mapa2_reiniciado == False):
             chamando_estatua(); chamando_demonio()
-
+    #Chama o mapa tres
     def mapa_tres():
+        #Animacao background
+        #Posicao dos elementos na lista: 0 = 1, 1 = quantidade de frames, 2 = diretorio, 3 = milissegundos
         mapas.animacao_fundo = [1, 1, './maps/map3/mapa', 100]
+        #Alterando algumas propriedades da nessa e chave
         nessa.shape('./move/right/mapa3/right1.gif')
         nessa.setpos(12, -14)
         nessa.chave.pegou = 0
+        #Defini o mapa e quantidade de montros
         mapas.mapa_atual = 3
         mapas.monstros_fase = 9
+        #Oculta todos os monstros
         for i in enemy_name:
             lista_inimigos[i].hideturtle()
 
+        #Lista para selecionar quantos inimigos serao utilizados
         mapas.inimigos_quantidade = {'esqueleto': 8, 'boss_final': 1, 'bola_final': 4}
+
+        #Chamando os inimigos do mapa
+        #Boss final
         lista_inimigos['boss_final'].setpos(0, 301); lista_inimigos['boss_final'].shape('./enemy/boss_final/boss_final_left1.gif')
+        #Esqueletos
         lista_inimigos['esqueleto1'].setpos(-601, 307); lista_inimigos['esqueleto2'].setpos(-622, -303); lista_inimigos['esqueleto3'].setpos(612, 315); lista_inimigos['esqueleto4'].setpos(599, -314); lista_inimigos['esqueleto5'].setpos(-536, 109); lista_inimigos['esqueleto6'].setpos(-527, -118); lista_inimigos['esqueleto7'].setpos(350, 121); lista_inimigos['esqueleto8'].setpos(359, -82)
         if (mapas.mapa3_reiniciado == False):
             chamando_esqueleto(); chamando_boss_final(); chamando_bola_final()
-
+    #Chama o ultimo mapa - escolha do final do jogo
     def fim():
+        #Oculta todos os inimigos
         for i in enemy_name:
             lista_inimigos[i].hideturtle()
         for i in range(4):
             lista_inimigos[f'bola_final{i+1}'].ontimer_continuar = False
             lista_inimigos[f'bola_final{i+1}'].hideturtle()
 
+        #Alterando algumas propriedades da nessa
         nessa.setpos(1, -37)
         nessa.shape('./move/right/fim/right1.gif')
+        #Animacao background
+        #Posicao dos elementos na lista: 0 = 1, 1 = quantidade de frames, 2 = diretorio, 3 = milissegundos
         mapas.animacao_fundo = [1, 1, './maps/fim/fim', 100]
+        #Define mapa atual
         mapas.mapa_atual = 4
 
         janela.update()
 
-    #Escolhas
+    #Finais possiveis
+    #Chama o final ruim
     def poder():
         mapas.ontimer_continuar = False
         nessa.hideturtle()
@@ -519,7 +550,7 @@ class mapas():
         sleep(10)
         mapas.final = True
         game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
-
+    #Chama o final neutro
     def riquezas():
         mapas.ontimer_continuar = False
         nessa.hideturtle()
@@ -529,7 +560,7 @@ class mapas():
         sleep(10)
         mapas.final = True
         game_over(janela, nessa, lista_inimigos, enemy_name, teclas_off, mapas)
-
+    #Chama o final bom
     def liberdade():
         mapas.ontimer_continuar = False
         nessa.hideturtle()

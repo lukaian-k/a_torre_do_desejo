@@ -129,7 +129,7 @@ def collision_mapa(objeto, mapas):
                 return True
 
         #Colisao com as escolhas do mapa
-        coordenadas_escolhas = [[-10, 275, 50, 50, 50, 50], [553, -287, 50, 50, 50, 50], [-549, -290, 50, 50, 50, 50]]
+        coordenadas_escolhas = [[-10, 275, 87, 87, 49, 49], [553, -287, 39, 39, 45, 45], [-549, -290, 38, 38, 45, 45]]
         for i in range(len(coordenadas_escolhas)):
             if (collision_square(objeto, coordenadas_escolhas[i][0], coordenadas_escolhas[i][2], coordenadas_escolhas[i][3], coordenadas_escolhas[i][1], coordenadas_escolhas[i][4], coordenadas_escolhas[i][5]) == True):
                 if (i == 0):

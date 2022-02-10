@@ -6,7 +6,6 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
     global play
     play = False
 
-    #Reseta todos os elementos para recomecar o jogo apartir do mapa um
     if (mapas.mapa1_reiniciado == False):
         for i in range(70):
             screen.bgpic(f'./screen/equipe/dev{i+1}.gif')
@@ -27,6 +26,7 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
                 screen.bgpic(f'./screen/tela_inicial/tela{i+1}.gif')
                 sleep(0.03)
                 screen.update()
+    #Reseta todos os elementos para recomecar o jogo apartir do mapa um
     else:
         if (mapas.final == True):
             mapas.final = False
@@ -34,7 +34,6 @@ def inicio(screen, player, lista_inimigos, enemy_name, mapas):
                 screen.bgpic(f'./screen/equipe/dev{i+1}.gif')
                 screen.update()
                 sleep(0.01)
-
         screen.onkey(iniciar_gamer, 'Return')
 
         while True:

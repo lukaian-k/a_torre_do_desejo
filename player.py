@@ -34,6 +34,7 @@ def reset_frame_walk(frame_up, frame_down, frame_right, frame_left):
     return [frame_up, frame_down, frame_right, frame_left]
 
 #Tiro do arco - faz com que a flecha mude de sprite e direcao, cria a movimentacao do tiro e checa se colidio com alguma coisa
+#Primeirta parte do tiro do arco
 def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas):
     print(x, y)
     if (lista_objetos['flecha'].ataque == True and mapas.monstros_fase > 0):
@@ -62,7 +63,7 @@ def atack_bow(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_o
         
         lista_objetos['flecha'].showturtle()
         tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas)
-
+#Segunda parte do tiro do arco
 def tiro(x, y, screen, lista_objetos, lista_inimigos, eventos_on, eventos_off, time_shot, mapas):
     ocorreu_colisao = False
     screen.update()
