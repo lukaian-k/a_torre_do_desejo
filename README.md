@@ -13,7 +13,7 @@
 <!--sobre o desenvolvimento-->
 <h3 align="center"><strong>Sobre o desenvolvimento</strong</h3>
 
-<h4 align="left">O projeto foi desenvolvido 100% com o <b>python</b>, e foram utilizados dois módulos: <a href="https://docs.python.org/3/library/turtle.html"><b>turtle</b></a> e <a href="https://docs.python.org/3/library/time.html"><b>time</b></a>.</h4>
+<h4 align="left">O projeto foi desenvolvido 100% com o <b>python 3.10</b>, e foram utilizados dois módulos: <a href="https://docs.python.org/3/library/turtle.html"><b>turtle</b></a> e <a href="https://docs.python.org/3/library/time.html"><b>time</b></a>.</h4>
 
 <h5 align="center"><br>
 
